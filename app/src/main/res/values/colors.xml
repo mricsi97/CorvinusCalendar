@@ -2,7 +2,9 @@
 <resources>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBackground">#fafafa</color>
-    <color name="colorLightGray">#D3D3D3</color>
+    <color name="colorLightGray">#cccccc</color>
+    <color name="colorGray">#808080</color>
+    <color name="colorDarkGray">#333333</color>
     <color name="colorPrimaryDarker">#1e3248</color>
     <color name="colorPrimaryDark">#355880</color>
     <color name="colorPrimary">#4b7eb4</color>

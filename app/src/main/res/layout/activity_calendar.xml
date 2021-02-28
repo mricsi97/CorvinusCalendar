@@ -7,138 +7,46 @@
     android:background="@color/colorPrimaryDarker"
     tools:context=".CalendarActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_Calendar"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:elevation="1dp"
-        android:background="@color/colorPrimaryDarker" >
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|top"
-            android:gravity="center"
-            android:orientation="vertical">
-            <TextView
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_Calendar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:elevation="1dp"
+            android:background="@color/colorPrimaryDarker" >
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-                style="@style/AppTheme"
-                android:text="Naptár" />
-            <TextView
-                android:id="@+id/tvMonth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                style="@style/AppTheme"
-                android:text="tvMonth_Toolbar" />
-        </LinearLayout>
-    </androidx.appcompat.widget.Toolbar>
+                android:layout_gravity="center_horizontal|top"
+                android:gravity="center"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    style="@style/AppTheme"
+                    android:text="Naptár" />
+                <TextView
+                    android:id="@+id/tvDate_Toolbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    style="@style/AppTheme"
+                    android:text="tvMonth_Toolbar" />
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDarker"
-        android:elevation="1dp"
-        android:paddingBottom="4dp"
-        android:layout_marginTop="?actionBarSize">
+        <include layout="@layout/toolbar_weekdays" />
 
-        <TextView
-            android:id="@+id/tvMonday"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/calendarViewPager"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/AppTheme"
-            android:text="HÉ"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tvTuesday"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/tvTuesday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/AppTheme"
-            android:text="KE"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tvWednesday"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tvMonday"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvWednesday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/AppTheme"
-            android:text="SZE"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tvThursday"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tvTuesday"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvThursday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/AppTheme"
-            android:text="CSÜ"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tvFriday"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tvWednesday"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvFriday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/AppTheme"
-            android:text="PÉ"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tvSaturday"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tvThursday"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvSaturday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/AppTheme"
-            android:text="SZO"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tvSunday"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tvFriday"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvSunday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/AppTheme"
-            android:text="VAS"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tvSaturday"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <CalendarView
-        android:id="@+id/calendarView"
-        android:translationY="-90dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_anchor="@id/bottomSheet_Calendar"
-        app:layout_anchorGravity="top"
-        android:theme="@style/AppTheme.CalendarViewTheme" />
-<!--    app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"-->
-
+    </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/bottomSheet_Calendar"
@@ -147,9 +55,6 @@
         android:background="@drawable/round_background_shape"
         app:behavior_peekHeight="400dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
-<!--        app:paddingBottomSystemWindowInsets="true"-->
-<!--        app:paddingLeftSystemWindowInsets="true"-->
-
         <TextView
             android:id="@+id/tvDate_BottomSheet"
             android:layout_width="wrap_content"
@@ -157,7 +62,6 @@
             android:layout_gravity="center_horizontal"
             android:text="tvDate_BottomSheet"
             android:textSize="18sp" />
-
     </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
