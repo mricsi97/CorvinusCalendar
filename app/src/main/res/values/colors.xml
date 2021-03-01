@@ -5,8 +5,8 @@
     <color name="colorLightGray">#cccccc</color>
     <color name="colorGray">#808080</color>
     <color name="colorDarkGray">#333333</color>
-    <color name="colorPrimaryDarker">#1e3248</color>
-    <color name="colorPrimaryDark">#355880</color>
+    <color name="colorPrimaryDarker">#0b2b47</color>
+    <color name="colorPrimaryDark">#183255</color>
     <color name="colorPrimary">#4b7eb4</color>
     <color name="colorPrimaryLight">#81a5ca</color>
     <color name="colorPrimaryLighter">#b7cbe1</color>

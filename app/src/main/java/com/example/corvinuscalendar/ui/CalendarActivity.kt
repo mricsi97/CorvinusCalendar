@@ -1,32 +1,39 @@
-package com.example.corvinuscalendar
+package com.example.corvinuscalendar.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
+import com.example.corvinuscalendar.ui.month.MonthViewPagerAdapter
+import com.example.corvinuscalendar.R
+import com.example.corvinuscalendar.data.DayItem
 import kotlinx.android.synthetic.main.activity_calendar.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.ceil
 
 // 1970-01-01 00:00 - 2100-01-01 00:00
 const val MINIMUM_DATE_EPOCH_MILLIS = 0L
 const val MAXIMUM_DATE_EPOCH_MILLIS = 4102444800000L
 const val MONTH_MILLIS = 2629743000L
 
-private const val TAG = "CalendarActivity"
-
 class CalendarActivity : AppCompatActivity() {
 
-    private val dateFormatter = SimpleDateFormat("yyyy. MM", Locale.ROOT)
+    private val topDateFormatter = SimpleDateFormat("yyyy. MM.", Locale.ROOT)
+    private val bottomDateFormatter = SimpleDateFormat("MM. dd.", Locale.ROOT)
+
+    private val calendarViewModel: CalendarViewModel by viewModels()
 
     private var pageSelectedCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
             val calendar = Calendar.getInstance()
             calendar.timeInMillis = MINIMUM_DATE_EPOCH_MILLIS
             calendar.add(Calendar.MONTH, position)
-            tvDate_Toolbar.text = dateFormatter.format(calendar.timeInMillis)
+            calendarViewModel.selectedMonthEpoch = calendar.timeInMillis
+            tvDate_Toolbar.text = topDateFormatter.format(calendar.timeInMillis)
             super.onPageSelected(position)
         }
     }
@@ -41,9 +48,22 @@ class CalendarActivity : AppCompatActivity() {
         calendarViewPager.adapter = MonthViewPagerAdapter(this)
         calendarViewPager.offscreenPageLimit = 3
         calendarViewPager.setCurrentItem(getCurrentMonthPosition(), false)
-        tvDate_Toolbar.text = dateFormatter.format(Calendar.getInstance().timeInMillis)
-        tvDate_BottomSheet.text
+        // TODO: nicer custom date formatting
+        tvDate_Toolbar.text = topDateFormatter.format(Calendar.getInstance().timeInMillis)
         calendarViewPager.registerOnPageChangeCallback(pageSelectedCallback)
+
+        calendarViewModel.selectedDay.observe(this, Observer { day ->
+            val dayTime = day.timeEpoch
+            tvDate_BottomSheet.text = bottomDateFormatter.format(dayTime)
+
+            if (day.isOtherMonth) {
+                if (dayTime < calendarViewModel.selectedMonthEpoch!!) {
+                    calendarViewPager.currentItem--
+                } else {
+                    calendarViewPager.currentItem++
+                }
+            }
+        })
     }
 
     override fun onDestroy() {
@@ -53,8 +73,11 @@ class CalendarActivity : AppCompatActivity() {
 
     private fun getCurrentMonthPosition() : Int {
         val calendar = Calendar.getInstance()
-        val monthOffset = (calendar.timeInMillis - MINIMUM_DATE_EPOCH_MILLIS) / MONTH_MILLIS
-        Log.i(TAG, monthOffset.toString())
+        calendar.set(Calendar.DAY_OF_MONTH, 1)
+        val currentMonthEpoch = calendar.timeInMillis
+        calendarViewModel.selectedMonthEpoch = currentMonthEpoch
+        val monthOffset = (currentMonthEpoch - MINIMUM_DATE_EPOCH_MILLIS) / MONTH_MILLIS +
+                if ((currentMonthEpoch - MINIMUM_DATE_EPOCH_MILLIS) % MONTH_MILLIS > 0) 1 else 0
         return monthOffset.toInt()
     }
 

@@ -1,11 +1,12 @@
-package com.example.corvinuscalendar
+package com.example.corvinuscalendar.ui.month
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import com.example.corvinuscalendar.R
+import com.example.corvinuscalendar.ui.WeekFragment
 import java.util.*
 
-private const val TAG = "MonthViewFragment"
 private const val ARG_FIRST_DAY_OF_MONTH_EPOCH = "ARG_FIRST_DAY_OF_MONTH_EPOCH"
 
 class MonthViewFragment : Fragment(R.layout.fragment_month) {
@@ -24,7 +25,9 @@ class MonthViewFragment : Fragment(R.layout.fragment_month) {
         calendar.timeInMillis = firstDayOfMonthEpoch
         val currentMonth = calendar.get(Calendar.MONTH)
         // Get week column of the first day of the month
-        val firstDayOfMonthColumn = calendar.get(Calendar.DAY_OF_WEEK) - 2
+        var firstDayOfMonthColumn = (calendar.get(Calendar.DAY_OF_WEEK) - 2) % 7
+        if (firstDayOfMonthColumn < 0)
+            firstDayOfMonthColumn += 7
         // Move calendar to the first day of the week
         calendar.add(Calendar.DAY_OF_MONTH, -firstDayOfMonthColumn)
 
@@ -33,7 +36,8 @@ class MonthViewFragment : Fragment(R.layout.fragment_month) {
             val weekFragment = WeekFragment.newInstance(
                 calendar.timeInMillis,
                 true,
-                currentMonth)
+                currentMonth
+            )
             // Add the week row to the layout
             childFragmentManager.beginTransaction()
                 .add(R.id.weekFragmentContainer, weekFragment)

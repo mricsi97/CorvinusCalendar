@@ -1,4 +1,4 @@
-package com.example.corvinuscalendar
+package com.example.corvinuscalendar.data
 
 data class DayItem(
     val timeEpoch: Long,
