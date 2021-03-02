@@ -2,6 +2,10 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+def apikeyPropertiesFile = rootProject.file("apikey.properties")
+def apikeyProperties = new Properties()
+apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
@@ -14,6 +18,11 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // should correspond to key/value pairs inside the file
+        buildConfigField("String", "EVENTBRITE_API_KEY", apikeyProperties['EVENTBRITE_API_KEY'])
+        buildConfigField("String", "EVENTBRITE_CLIENT_SECRET", apikeyProperties['EVENTBRITE_CLIENT_SECRET'])
+        buildConfigField("String", "EVENTBRITE_TOKEN", apikeyProperties['EVENTBRITE_TOKEN'])
     }
 
     buildTypes {
@@ -45,6 +54,9 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.fragment:fragment-ktx:1.3.0'
+
+    // Volley
+    implementation 'com.android.volley:volley:1.1.1'
 
     // Test
     testImplementation 'junit:junit:4.12'
